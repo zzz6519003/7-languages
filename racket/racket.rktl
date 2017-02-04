@@ -40,8 +40,24 @@
                (colorize (mk sz) "blue"))))
 
 
-(define (start request)
-  (response/xexpr
-   '(html
-     (head (title "My Blog"))
-     (body (h1 "Under construction")))))
+(define (my-length lst)
+  (cond
+   [(empty? lst) 0]
+   [else (+ 1 (my-length (rest lst)))]))
+
+ (define (my-length2 lst)
+   (define (iter lst len)
+     (cond
+       [(empty? lst) len]
+       [else (iter (rest lst) (+ len 1))]))
+   (iter lst 0))
+
+(define (my-map f lst)
+  (define (iter lst backward-result)
+    (cond
+      [(empty? lst) (reverse backward-result)]
+      [else (iter (rest lst)
+                  (cons (f (first lst))
+                        backward-result))]))
+  (iter lst empty))
+
