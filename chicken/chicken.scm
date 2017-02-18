@@ -1,0 +1,5 @@
+> (cdr '(subject. verb))
+'(verb)
+> (cdr '(subject .verb))
+'(.verb)
+> (cdr '(subject . verb))
