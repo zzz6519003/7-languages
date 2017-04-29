@@ -1,4 +1,3 @@
-module Main where
 
 -- Write a sort that takes a list and returns a sorted list.
 
@@ -16,4 +15,10 @@ sort (pivot:rest) = sort smaller ++ [pivot] ++ sort greater
 where
     smaller = filter (\x -> x < pivot) rest
     greater = filter (\x -> x >= pivot) rest
+
+sortListBy fun [] = []
+sortListBy fun (h:t) = insert fun h (sortListBy fun t)
+  where
+  insert fun i [] = [i]
+  insert fun i (sh:st) = if (fun i sh) then i:sh:st else sh:(insert fun i st)
 
