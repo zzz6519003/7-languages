@@ -59,3 +59,44 @@ oldies2 = filter (\p -> p.age > 16)
 
 (map (.name))(oldies2 people )
 
+
+-- • Write the same function, but allow records where the age field might be nothing. How does Elm support nil values?
+
+import Html exposing (text)
+import List exposing (..)
+
+addr = { street = "Cowley rd." , town   = "Oxford" , county = "Oxon." , pc     = "OX4 1DN" }
+
+people = 
+  [ { name = "Edward Normalhands", age = Just 28,  address = addr }
+  , { name = "Luke Landwalker",    age = Just 16,  address = addr }
+  , { name = "Dave Vader",         age = Nothing,  address = addr }
+  , { name = "Dan Solo",           age = Just 33,  address = addr }
+  , { name = "Pizza the Hutt",     age = Just 164, address = addr }
+  ]
+
+oldies ps = 
+  case ps of 
+    []      -> []
+    p::ps  -> case p.age of
+                  Just n -> if n > 16 
+                              then p :: oldies ps
+                            else oldies ps
+                  Nothing -> oldies ps
+
+-- or for a simpler implementation with currying you could
+oldies2 = filter (\p -> case p.age of
+                              Just n  -> n > 16
+                              Nothing -> False )
+
+-- map (.name) (oldies people)
+-- ["Edward Normalhands","Dan Solo","Pizza the Hutt"] : [String]
+-- > map (.name) (oldies' people)
+-- ["Edward Normalhands","Dan Solo","Pizza the Hutt"] : [String]
+-- (map (.name))(oldies2 people )
+
+main =
+  text (toString (
+    (map (.name))(oldies2 people )
+
+    ))
