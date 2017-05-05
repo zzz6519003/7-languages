@@ -23,3 +23,9 @@ asTx p d =
 
 
 
+main = yOnClick
+
+yOnClick =
+  Signal.map show (Signal.sampleOn Mouse.clicks Mouse.y)
+
+
