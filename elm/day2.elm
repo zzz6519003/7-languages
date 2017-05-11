@@ -74,4 +74,18 @@ show : (Int,Int) -> Bool -> (Int,Int) -> Element
 show (w,h) d (x,y) = collage w h 
                 [ drawCircle w h d x y ]
 
+-- Write a program that counts up, from zero, with one count per second.
+
+import Text exposing(..)
+import Graphics.Element exposing(..)
+import Time exposing(every, second)
+
+
+main = 
+   Signal.map show count
+
+count : Signal.Signal Int
+count = 
+  Signal.foldp (\click count -> count + 1) 0 (every second)
+
 
