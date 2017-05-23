@@ -16,3 +16,15 @@
 
 
 ((λ () "Hello World"))
+
+(define-syntax-rule (while condition body ...)
+  (let loop ()
+    (when condition
+      body ...
+      (loop))))
+
+(let ([i 0])
+  (while (< i  10)
+    (displayln i)
+    (set! i (add1 i))))
+
