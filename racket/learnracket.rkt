@@ -1,3 +1,6 @@
+#lang racket
+
+
 (let ([me "Bob"])
   "Alice"
   ) ; => "Bob"
@@ -11,7 +14,7 @@
                          (is-odd? (sub1 n))))]
          [is-odd? (lambda (n) (and (not (zero? n))
                                    (is-even? (sub1 n))))])
-  )
+  (is-odd? 11) (is-odd? 11) (is-odd? 12))
 
 
 
@@ -28,27 +31,36 @@
     (displayln i)
     (set! i (add1 i))))
 
-;; Macros are hygienic, you cannot clobber existing variables!
-(define-syntax-rule (swap! x y) ; -! is idiomatic for mutation
-  (let ([tmp x])
-    (set! x y)
-    (set! y tmp)))
+(define (hello4 [name "World"])
+  (string-append "Hello " name))
 
-(define tmp 2)
-(define other 3)
-(swap! tmp other)
-(printf "tmp = ~a; other = ~a\n" tmp other)
-;; The variable `tmp` is renamed to `tmp_1`
-;; in order to avoid name conflict
-;; (let ([tmp_1 tmp])
-;;   (set! tmp other)
-;;   (set! other tmp_1))
+(define (hello-k #:name [name "World"] #:greeting [g "Hello"] . args)
+  (format "~a ~a, ~a extra args" g name (length args)))
 
-;; But they are still code transformations, for example:
-(define-syntax-rule (bad-while condition body ...)
-  (when condition
-    body ...
-    (bad-while condition body ...)))
-;; this macro is broken: it generates infinite code, if you try to use
-;; it, the compiler will get in an infinite loop
+(define (fizzbuzz? n)
+  (match (list (remainder n 3) (remainder n 5))
+    [(list 0 0) 'fizzbuzz]
+    [(list 0 _) 'fizz]
+    [(list _ 0) 'buzz]
+    [_          #f]))
+
+(fizzbuzz? 15)
+(fizzbuzz? 37)
+
+;; Looping can be done through (tail-) recursion
+(define (loop i)
+  (when (< i 10)
+    (printf "i=~a\n" i)
+    (loop (add1 i))))
+(loop 5)
+
+(let loop ((i 0))
+  (when (< i 10)
+    (printf "i=~a\n" i)
+    (loop (add1 i))))
+
+(for ([i (in-list '(l i s t))])
+  (displayln i))
+
+(for ([i 10] [j '(x y z f)] [k '(1 2 3)]) (printf "~a:~a ~a\n" i j k))
 
