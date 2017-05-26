@@ -64,3 +64,15 @@
 
 (for ([i 10] [j '(x y z f)] [k '(1 2 3)]) (printf "~a:~a ~a\n" i j k))
 
+(define (make-accumulator delta)
+  (lambda (amount)
+    (set! delta (+ delta amount))
+    delta))
+ 
+(define A (make-accumulator 5))
+(define B (make-accumulator 5))
+(A 10)
+ 
+(A 10)
+ 
+(B 10)
