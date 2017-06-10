@@ -77,3 +77,11 @@ module Maine where
     every8th x y =
         (zipWith (+) (every3rd x) (every5th y))
 
+-- Write a function to determine the greatest common denominator of two integers.
+module GCD where
+
+-- Euclidean algorithm
+my_gcd m n | m < n     = my_gcd n m
+           | n == 0    = m
+           | otherwise = my_gcd (m-n) n
+
