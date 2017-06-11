@@ -76,6 +76,20 @@ module Maine where
     -- adding each value to the other.
     every8th x y =
         (zipWith (+) (every3rd x) (every5th y))
+module Lazy where
+
+thirds x = [x, x+3..]
+fifths x = [x, x+5..]
+eighths x y = zipWith (+) (thirds x) (fifths y)
+Testing:
+
+*Lazy> take 10 $ thirds 10
+[10,13,16,19,22,25,28,31,34,37]
+*Lazy> take 10 $ fifths 20
+[20,25,30,35,40,45,50,55,60,65]
+*Lazy> take 10 $ eighths 10 20
+[30,38,46,54,62,70,78,86,94,102]
+
 
 -- Write a function to determine the greatest common denominator of two integers.
 module GCD where
