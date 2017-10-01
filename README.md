@@ -1,5 +1,4 @@
-#My walkthrough of the book 7-languages-in-7-weeks plus other la
-nguage learning
+# My walkthrough of the book 7-languages-in-7-weeks plus other language learning
 
 ## Gist
 ### OCaml
